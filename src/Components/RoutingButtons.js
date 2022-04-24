@@ -1,77 +1,55 @@
-//clicking a button will take you to the next page
-import firebase from 'firebase'
-import console from 'console'
 
 //this function takes in a name and returns a firebase object of the germ
 import {getName} from "./firebaseUtils";
 import PersonTracker from "./PersonTracker";
 import {useContext} from "react";
-
-
-
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {Button, Card, Image} from 'react-bootstrap';
+import React from 'react';
 // -props.button- is the name of the current germ button. -props.updateGerm- is a function to update the germ in the parent
 const RoutingButton = (props) => {
 
     const {buttonNameArray, updateArray} = useContext(PersonTracker);
 
+    //cut the identifier off of the name so that it can be displayed properly
+    let modifiedName = props.button.slice(0,-4)
+
+    let image = props.image
+
 try {
 
-    //need to use an async onclick to wait until the database retrieves the queried data
-
     //if clicked, load the new identifier name into the update function passed into this component. Passing anything to update will launch a rerender
+    return (<Card>
 
-    return <button onClick={ async () => {
-
-        //stores the return germ object wrapped in another firebase created object
-
-
-        //stores the first key of the return data (firebase generated id). Only 1 here (from the use of limit so use index = 0
-
-
-        //gets the germ object based upon the key
+        <Button variant = "secondary" onClick={ async () => {
+        //gets the particular germNode object based upon the name of the node
         let fullGerm = await getName(props.button)
 
-        //console.log(fullGerm)**testing
-
-
-        // console.log(cat) *testing
-
-
-        //if the array of buttons exists in the current loaded germ identifier name, update the germ identifier state with this new one
+        //if the array of buttons exists in the current loaded germNode, update the parent with a new node to the array
         if(fullGerm.buttonList) {
-
-            //console.log(fullGerm.name) **testing
 
             //update the array with the new germ node if clicked
             updateArray([...buttonNameArray, fullGerm])
-
-            //props.updateGerm(fullGerm) **deprecated
         }
         else {
-
             //otherwise, do nothing. In the future, add styling, take up the whole page with the answer, etc. Up to Robert!
             return undefined
         }
 
-
     }}>
 
-
-
-
-
-        {props.button} </button>
-
-
-    //props.updateGerm({name: "cone", image: "noneyet", buttonList: ["hello", "dog"] }) **testing a hardcoded object**
+        {modifiedName} </Button>
+            <Image src= {image} className = "card-img img" />
+        </Card>
+    )
 
 }
+
 catch (Exception) {
 
-    console.log("weird result")
-}
+    console.log(Exception)
 }
 
+}
 
 export default RoutingButton

@@ -1,4 +1,3 @@
-
 import './App.css';
 import QuestionPage from "./Components/QuestionPage";
 import {useState} from "react";
@@ -7,12 +6,15 @@ import Header from "./Components/Header";
 import * as React from "react";
 import PersonTracker from "./Components/PersonTracker"; //context (global variables essentially) that can be used anywhere and trigger a refresh on updates
 
+
+
+
 function App() {
     //set a state to use for updating array
    const [buttonNameArray, updateArray]= useState([{
-       name: "Homepage",
-       image: "nothing here for now",
-       buttonList: ["Gram Positive", "Gram Negative"]
+       name: "Homepage 0000",
+       image: "https://images-ext-1.discordapp.net/external/i9Sm7SJlP_Cud2bLMpml0JfaX7QfZi86JvG43TC6hU8/https/www.verywellhealth.com/thmb/-jD_krAWs3AEusH0FN_Mpm3pB3I%3D/2823x2117/smart/filters%3Ano_upscale%28%29/microphotograph-of-example-of-staining-bacteria-using-gram-method--at-x1250-magnification-173288072-ab648ac296f846faaa075a7101f06024.jpg?width=1248&height=936",
+       buttonList: ["Gram Positive 0000", "Gram Negative 0000"]
    }])
 
 
@@ -21,84 +23,22 @@ function App() {
 
     console.log(buttonNameArray) //testing
 
-
-
-
-
-  //TODO : This needs to be a function that executes once with our entire datastore. Once we do this, one person should run it. Can be placed somewhere else. Just put here for testing the push
-    // Everyone should add to this, and this will be removed once everything is in!
-    //Be careful! When testing, this will push ALOT to the database. Make sure to clear it every couple of button clicks.
-    //This should be done first
-
-
     //create a firebase object that contains the entire formatted database
     const germBase = firebase.database().ref();
 
     //get or create a reference to the germs child/object in the database
-    const germs = germBase.child("germs");
-
-    //create an object. All objects should look like this
-
-    let germ = {
-        name: "Homepage",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: ["Gram Positive", "Gram Negative"]
-    }
+   // const germs = germBase.child("germs");
 
 
-    let child1 =  {
-        name: "Gram Positive",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: ["rod", "cone"]
-    }
+//if you need to reset the database, copy the external file here and uncomment out the REMOVE function . Reload the webpage once and comment back out.
+//then comment in PUSHER, reload once, and comment back out.
 
-    let child2 =  {
-        name: "Gram Negative",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: ["cat", "dog"]
-    }
-
-    let child3 =  {
-        name: "rod",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: []
-    }
-
-    let child4 =  {
-        name: "cone",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: []
-    }
-
-    let child5 =  {
-        name: "cat",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: []
-    }
-
-    let child6 =  {
-        name: "dog",
-        image: "kisspng-computer-icons-home-clip-art-black-home-icon-5ab0be31073f68.5448178115215324650297.jpg",
-        buttonList: []
-    }
-
-
-
-
-    //push this object to the database. Makes it easy to add/update from a gui if we make this a function that can run in the header! Maybe a good candidate to be moved there
-    germs.push(germ);
-    germs.push(child1);
-    germs.push(child2);
-    germs.push(child3);
-    germs.push(child4);
-    germs.push(child5);
-    germs.push(child6);
-
-
-//this needs a bunch of styling. Add a classname and use the index.css for this and/or bootstrap or similar
+    //pusher()
+    //germBase.remove()
 
 
     return (
+
   <div>
 
       <PersonTracker.Provider value = {value} >
@@ -106,14 +46,18 @@ function App() {
           <div>
               <Header germ = {buttonNameArray[buttonNameArray.length -1]} ></Header>
           </div>
+
           <div>
               <QuestionPage germ = {buttonNameArray[buttonNameArray.length -1]} ></QuestionPage>
           </div>
 
       </PersonTracker.Provider>
 
+
+
   </div>
   );
+
 }
 
 export default App;
