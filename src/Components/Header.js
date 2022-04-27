@@ -22,7 +22,11 @@ const Header = (props) => {
     const [error, setError] = useState("")
     const { currentUser, logout } = useAuth()
     const history = useHistory()
+
     let user = JSON.parse(sessionStorage.getItem('currentUser'))
+    window.addEventListener('beforeunload',(event) =>{
+        logout()
+    });
 
         const [clearance, setClearance] = useState({});
       
@@ -34,10 +38,11 @@ const Header = (props) => {
         }, [])
 
      async function checkUser(){
+        if(currentUser != null){
       let student = await isStudent(currentUser.email)
       let professor = await isProfessor(currentUser.email)
       let admin = await isAdmin(currentUser.email);
-
+        
       if(student){
           return 1
       }
@@ -46,6 +51,10 @@ const Header = (props) => {
       }
       if(admin){
           return 3
+        }
+    }
+        else{
+            return 0
         }
         alert(clearance)
         return clearance;
